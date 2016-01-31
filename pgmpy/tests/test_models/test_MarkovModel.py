@@ -564,7 +564,7 @@ class TestUndirectedGraphTriangulation(unittest.TestCase):
 
         # Modify the original graph ...
         self.graph.add_nodes_from(['c'])
-        self.graph.add_edges_from([ ('c', 'b') ])
+        self.graph.add_edges_from([('c', 'b') ])
 
         # ... and ensure none of those changes get propagated
         self.assertEqual(len(copy.nodes()), 2)
@@ -577,7 +577,7 @@ class TestUndirectedGraphTriangulation(unittest.TestCase):
         self.assertEqual(len(copy.get_factors()), 0)
 
         # Add factors to the original graph
-        phi1 = Factor(['a', 'b'], [2, 2], [ [0.3, 0.7], [0.9, 0.1] ])
+        phi1 = Factor(['a', 'b'], [2, 2], [[0.3, 0.7], [0.9, 0.1]])
         self.graph.add_factors(phi1)
 
         # The factors should not get copied over
@@ -590,7 +590,7 @@ class TestUndirectedGraphTriangulation(unittest.TestCase):
         self.assertListEqual(copy.get_factors(), self.graph.get_factors())
 
         # If we change factors in the original, it should not be passed to the clone
-        phi1.values = np.array([ [0.5, 0.5], [0.5, 0.5] ])
+        phi1.values = np.array([[0.5, 0.5], [0.5, 0.5]])
         self.assertNotEqual(self.graph.get_factors(), copy.get_factors())
 
         # Start with a fresh copy
