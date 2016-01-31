@@ -696,10 +696,14 @@ class MarkovModel(UndirectedGraph):
         >>> G_copy.nodes()
         [('a', 'b'), ('b', 'c')]
         """
-        clone_graph = MarkovModel(self.edges())
+        clone_graph = MarkovModel()
+
+        clone_graph.add_nodes_from(self.nodes())
+        clone_graph.add_edges_from(self.edges())
 
         if self.factors:
             factors_copy = [factor.copy() for factor in self.factors]
             clone_graph.add_factors(*factors_copy)
 
         return clone_graph
+

@@ -593,5 +593,19 @@ class TestUndirectedGraphTriangulation(unittest.TestCase):
         phi1.values = np.array([ [0.5, 0.5], [0.5, 0.5] ])
         self.assertNotEqual(self.graph.get_factors(), copy.get_factors())
 
+        # Start with a fresh copy
+        del copy
+        self.graph.add_nodes_from(['d'])
+        copy = self.graph.copy()
+
+        # Ensure an unconnected node gets copied over as well
+        self.assertEqual(len(copy.nodes()), 4)
+        self.assertListEqual(self.graph.neighbors('a'), ['b'])
+        self.assertTrue('a' in self.graph.neighbors('b'))
+        self.assertTrue('c' in self.graph.neighbors('b'))
+        self.assertListEqual(self.graph.neighbors('c'), ['b'])
+        self.assertListEqual(self.graph.neighbors('d'), [])
+
     def tearDown(self):
         del self.graph
+
